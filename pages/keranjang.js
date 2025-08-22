@@ -1,63 +1,54 @@
-
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Keranjang() {
   const [cart, setCart] = useState([]);
-  const nomorWA = "6285602348052";
 
-  // Load cart dari localStorage
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
+    setCart(savedCart ? JSON.parse(savedCart) : []);
   }, []);
 
-  // Checkout ke WhatsApp
-  const handleCheckout = () => {
-    if (cart.length === 0) {
-      alert("Keranjang masih kosong!");
-      return;
-    }
+  const removeItem = (index) => {
+    const updatedCart = cart.filter((_, i) => i !== index);
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
 
-    let pesan = "Halo Maha Billiard, saya ingin memesan:\n\n";
-    cart.forEach((item, index) => {
-      pesan += `${index + 1}. ${item.nama} - ${item.harga}\n`;
-    });
-
-    const url = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
-    window.open(url, "_blank");
+  const cancelOrder = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>🛒 Keranjang Belanja</h1>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Keranjang Belanja</h1>
       {cart.length === 0 ? (
-        <p>Keranjang kosong.</p>
+        <p>Keranjang kosong</p>
       ) : (
-        <ul>
+        <div className="space-y-4">
           {cart.map((item, index) => (
-            <li key={index}>
-              {item.nama} — <strong>{item.harga}</strong>
-            </li>
+            <div
+              key={index}
+              className="flex justify-between items-center bg-gray-100 p-4 rounded-lg"
+            >
+              <span>{item.name} - Rp{item.price}</span>
+              <button
+                onClick={() => removeItem(index)}
+                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+              >
+                Hapus
+              </button>
+            </div>
           ))}
-        </ul>
-      )}
 
-      <button
-        onClick={handleCheckout}
-        style={{
-          marginTop: 20,
-          padding: "10px 20px",
-          backgroundColor: "green",
-          color: "white",
-          border: "none",
-          borderRadius: 5,
-          cursor: "pointer",
-        }}
-      >
-        Checkout via WhatsApp
-      </button>
+          <button
+            onClick={cancelOrder}
+            className="mt-6 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
+          >
+            ❌ Cancel Pesanan
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -16,7 +16,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-gray-800 text-white">
+    <nav className="flex items-center justify-between px-6 py-4 bg-gray-800 text-white shadow-md">
       <Link href="/" className="flex items-center gap-2">
         <Image src="/logo.png" alt="Maha Billiard" width={40} height={40} />
         <span className="text-xl font-bold">Maha Billiard</span>

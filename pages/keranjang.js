@@ -17,9 +17,9 @@ export default function Keranjang() {
   };
 
   const cancelOrder = () => {
-    if (confirm("Yakin ingin cancel semua pesanan?")) {
-      setCart([]); // kosongkan state
-      localStorage.setItem("cart", JSON.stringify([])); // kosongkan storage
+    if (window.confirm("Yakin ingin cancel semua pesanan?")) {
+      setCart([]);                         // kosongkan state
+      localStorage.removeItem("cart");     // hapus storage
     }
   };
 

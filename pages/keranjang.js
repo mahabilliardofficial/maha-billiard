@@ -5,7 +5,9 @@ export default function Keranjang() {
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
-    setCart(savedCart ? JSON.parse(savedCart) : []);
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
   }, []);
 
   const removeItem = (index) => {
@@ -15,8 +17,10 @@ export default function Keranjang() {
   };
 
   const cancelOrder = () => {
-    setCart([]);
-    localStorage.removeItem("cart");
+    if (confirm("Yakin ingin cancel semua pesanan?")) {
+      setCart([]); // kosongkan state
+      localStorage.setItem("cart", JSON.stringify([])); // kosongkan storage
+    }
   };
 
   return (
@@ -31,7 +35,9 @@ export default function Keranjang() {
               key={index}
               className="flex justify-between items-center bg-gray-100 p-4 rounded-lg"
             >
-              <span>{item.name} - Rp{item.price}</span>
+              <span>
+                {item.name} - Rp{item.price}
+              </span>
               <button
                 onClick={() => removeItem(index)}
                 className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"

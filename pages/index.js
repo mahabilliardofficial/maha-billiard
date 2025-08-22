@@ -1,8 +1,4 @@
-import Link from "next/link";
-
-export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center h-[80vh] text-center" style={{ backgroundColor: "#fef3c7" }}>
+<div className="flex flex-col items-center justify-center h-[80vh] text-center" style={{ backgroundColor: "#fef3c7" }}>
   <div className="p-10 rounded-xl bg-white shadow-lg">
     <h1 className="text-4xl font-bold text-gray-800">Maha Billiard 🎱</h1>
     <p className="mt-2 text-gray-600">

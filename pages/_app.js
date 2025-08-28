@@ -1,12 +1,9 @@
-
 import "@/styles/globals.css";
-import Navbar from "../components/Navbar";
 
-export default function App({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   return (
-    <>
-      <Navbar />
+    <div style={{ backgroundColor: "#fefcf7", minHeight: "100vh" }}>
       <Component {...pageProps} />
-    </>
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Keranjang() {
   const [cart, setCart] = useState([]);
@@ -51,26 +52,23 @@ export default function Keranjang() {
               </div>
             ))}
 
-            {/* Total Harga */}
             <div className="flex justify-between items-center border-t pt-4 text-lg font-bold text-gray-800">
               <span>Total:</span>
               <span>Rp{totalHarga.toLocaleString("id-ID")}</span>
             </div>
 
-            {/* Tombol Aksi */}
             <div className="flex gap-3 mt-4">
               <button
                 onClick={cancelOrder}
                 className="flex-1 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
               >
-                ❌ Cancel Pesanan
+                ❌ Cancel
               </button>
-              <button
-                onClick={() => alert("Checkout belum nyambung ke pembayaran, mas 🙏")}
-                className="flex-1 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
-              >
-                ✅ Checkout
-              </button>
+              <Link href="/checkout">
+                <button className="flex-1 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
+                  ✅ Checkout
+                </button>
+              </Link>
             </div>
           </div>
         )}

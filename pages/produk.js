@@ -1,56 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Produk() {
   const produkList = [
-    { nama: "Meja Billiard Premium", harga: "Rp15.000.000" },
-    { nama: "Stick Billiard Import", harga: "Rp750.000" },
-    { nama: "Bola Set Aramith", harga: "Rp1.200.000" },
+    { name: "Meja Billiard Premium", price: 15000000 },
+    { name: "Stick Billiard Import", price: 2500000 },
+    { name: "Sarung Tangan Billiard", price: 150000 },
+    { name: "Kapur Cue", price: 50000 },
   ];
 
   const [cart, setCart] = useState([]);
 
-  // Load cart dari localStorage saat pertama kali buka
-  useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
-
-  // Simpan cart ke localStorage setiap kali berubah
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
   const addToCart = (item) => {
-    setCart([...cart, item]);
-    alert(`${item.nama} berhasil ditambahkan ke keranjang!`);
+    const newCart = [...cart, item];
+    setCart(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    alert(`${item.name} ditambahkan ke keranjang ✅`);
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>📦 Produk Kami</h1>
-      <ul>
-        {produkList.map((item, index) => (
-          <li key={index} style={{ marginBottom: 10 }}>
-            {item.nama} — <strong>{item.harga}</strong>
-            <button
-              onClick={() => addToCart(item)}
-              style={{
-                marginLeft: 10,
-                padding: "5px 10px",
-                backgroundColor: "blue",
-                color: "white",
-                border: "none",
-                borderRadius: 5,
-                cursor: "pointer",
-              }}
-            >
-              Tambah ke Keranjang
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className="min-h-screen p-6" style={{ backgroundColor: "#faf3e0" }}>
+      <div className="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">🛍 Produk Kami</h1>
+        <div className="grid gap-4">
+          {produkList.map((item, i) => (
+            <div key={i} className="flex justify-between items-center border p-4 rounded-lg bg-gray-50">
+              <span className="text-gray-700 font-medium">
+                {item.name} - Rp{item.price.toLocaleString("id-ID")}
+              </span>
+              <button
+                onClick={() => addToCart(item)}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+              >
+                Tambah
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
